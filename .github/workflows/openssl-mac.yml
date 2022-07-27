@@ -9,6 +9,7 @@ on:
 
 env:
   version: 1.1.1m
+  SHLIB_VERSION_NUMBER: 1.1
   sha256sum: f89199be8b23ca45fc7cb9f1d8d3ee67312318286ad030f5316aca6462db6c96
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -27,14 +28,12 @@ jobs:
           shasum -a 256 -c checksum
           tar xf openssl-${version}.tar.gz
           mkdir universal
-          cp -r openssl-${version} arm64
-          cp -r openssl-${version} x86_64
 
       - uses: actions/cache@v3
         id: cache-arm64
         with:
           path: ${GITHUB_WORKSPACE}/openssl-arm64
-          key: ${{ runner.os }}-arm64-${sha256sum}
+          key: ${{ runner.os }}-arm64-${{ env.sha256sum }}
 
       - name: Build OpenSSL on arm64
         if: steps.cache-arm64.outputs.cache-hit != 'true'
@@ -50,7 +49,7 @@ jobs:
         id: cache-x86_64
         with:
           path: ${GITHUB_WORKSPACE}/openssl-x86_64
-          key: ${{ runner.os }}-arm64-${sha256sum}
+          key: ${{ runner.os }}-arm64-${{ env.sha256sum }}
 
       - name: Build OpenSSL on x86_64
         if: steps.cache-x86_64.outputs.cache-hit != 'true'
@@ -70,9 +69,9 @@ jobs:
           ln -s libssl.1.1.dylib universal/lib/libssl.dylib
           ln -s libcrypto.1.1.dylib universal/lib/libcrypto.dylib
           cp -r openssl-arm64/usr/local/include/ universal/include/
-          tar czf openssl-1.1.1m-univeral.tar.gz -C universal .
+          tar czf openssl-univeral.tar.gz -C universal .
 
       - uses: actions/upload-artifact@v3
         with:
-          name: openssl-1.1.1m-univeral.tar.gz
-          path: openssl-1.1.1m-univeral.tar.gz
+          name: openssl-univeral.tar.gz
+          path: openssl-univeral.tar.gz

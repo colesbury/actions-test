@@ -32,7 +32,7 @@ jobs:
       - uses: actions/cache@v3
         id: cache-arm64
         with:
-          path: ${GITHUB_WORKSPACE}/openssl-arm64
+          path: openssl-arm64
           key: ${{ runner.os }}-arm64-${{ env.sha256sum }}
 
       - name: Build OpenSSL on arm64
@@ -48,7 +48,7 @@ jobs:
       - uses: actions/cache@v3
         id: cache-x86_64
         with:
-          path: ${GITHUB_WORKSPACE}/openssl-x86_64
+          path: openssl-x86_64
           key: ${{ runner.os }}-arm64-${{ env.sha256sum }}
 
       - name: Build OpenSSL on x86_64

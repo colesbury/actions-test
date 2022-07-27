@@ -73,5 +73,5 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: openssl-univeral.tar.gz
-          path: openssl-univeral.tar.gz
+          name: openssl-universal.tar.gz
+          path: openssl-universal.tar.gz

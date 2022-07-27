@@ -49,7 +49,7 @@ jobs:
         id: cache-x86_64
         with:
           path: openssl-x86_64
-          key: ${{ runner.os }}-arm64-${{ env.sha256sum }}
+          key: ${{ runner.os }}-x86_64-${{ env.sha256sum }}
 
       - name: Build OpenSSL on x86_64
         if: steps.cache-x86_64.outputs.cache-hit != 'true'
@@ -69,7 +69,7 @@ jobs:
           ln -s libssl.1.1.dylib universal/lib/libssl.dylib
           ln -s libcrypto.1.1.dylib universal/lib/libcrypto.dylib
           cp -r openssl-arm64/usr/local/include/ universal/include/
-          tar czf openssl-univeral.tar.gz -C universal .
+          tar czf openssl-universal.tar.gz -C universal .
 
       - uses: actions/upload-artifact@v3
         with:
